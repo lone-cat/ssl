@@ -1,8 +1,10 @@
-# Symfony4
+###> symfony/framework-bundle ###
+/.env.local
+/.env.local.php
+/.env.*.local
 /var/
-
-# Managed by Composer
 /vendor/
+###< symfony/framework-bundle ###
 
 # PHPUnit
 /app/phpunit.xml
