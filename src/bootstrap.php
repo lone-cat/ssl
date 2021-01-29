@@ -14,11 +14,8 @@ require $root . '/vendor/autoload.php';
 $options = [
     'sslFolder' => realpath('/ssl'),
     'docroot' => realpath($root . '/public'),
-    'accountKeyFileName' => 'account.key',
-    'serverKeyFileName' => 'server.key',
-    'serverCertFileName' => 'server.crt',
     'email' => $_ENV['ADMIN_EMAIL'],
-    'domain' => $_ENV['DOMAIN'],
+    'domains' => explode(';', $_ENV['DOMAIN']),
 ];
 
 foreach ($options as $key => $value) {

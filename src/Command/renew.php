@@ -13,29 +13,40 @@ require('/app/src/bootstrap.php');
 
 $ret = `apache2-foreground > /dev/null &`;
 
-$accountKeyStorage = new FileStorage($sslFolder, $accountKeyFileName);
-$accountKeyManager = new KeyFileManager($accountKeyStorage);
+foreach ($domains as $domain) {
 
-$client = new ACMECert();
+    if (!$domain) {
+        break;
+    }
 
-$accountManager = new AccountManager($accountKeyManager, $client);
+    $accountKeyFileName = $domain . '.account.key';
+    $serverKeyFileName = $domain . '.key';
+    $serverCertFileName = $domain . '.crt';
 
-if ($accountManager->accountExists()) {
-    $accountManager->loadAccount();
-} else {
-    $accountManager->registerAccount($email);
-}
+    $accountKeyStorage = new FileStorage($sslFolder, $accountKeyFileName);
+    $accountKeyManager = new KeyFileManager($accountKeyStorage);
 
-$serverKeyStorage = new FileStorage($sslFolder, $serverKeyFileName);
-$serverKeyManager = new KeyFileManager($serverKeyStorage);
+    $client = new ACMECert();
 
-$severCertStorage = new FileStorage($sslFolder, $serverCertFileName);
-$serverCertManager = new CertFileManager($severCertStorage);
+    $accountManager = new AccountManager($accountKeyManager, $client);
 
-$certManager = new CertManager($serverKeyManager, $serverCertManager, $client);
+    if ($accountManager->accountExists()) {
+        $accountManager->loadAccount();
+    } else {
+        $accountManager->registerAccount($email);
+    }
 
-if (!$certManager->isCertValid()) {
-    $certManager->recreateCertBundle($domain, $docroot);
+    $serverKeyStorage = new FileStorage($sslFolder, $serverKeyFileName);
+    $serverKeyManager = new KeyFileManager($serverKeyStorage);
+
+    $severCertStorage = new FileStorage($sslFolder, $serverCertFileName);
+    $serverCertManager = new CertFileManager($severCertStorage);
+
+    $certManager = new CertManager($serverKeyManager, $serverCertManager, $client);
+
+    if (!$certManager->isCertValid()) {
+        $certManager->recreateCertBundle($domain, $docroot);
+    }
 }
 
 echo 'ok';
