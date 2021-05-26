@@ -11,8 +11,6 @@ use App\Services\KeyFileManager;
 
 require('/app/src/bootstrap.php');
 
-$ret = `apache2-foreground > /dev/null &`;
-
 foreach ($domains as $domain) {
 
     if (!$domain) {
