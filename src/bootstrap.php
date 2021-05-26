@@ -12,7 +12,7 @@ require $root . '/vendor/autoload.php';
 (new Dotenv())->bootEnv($root . '/.env');
 
 $options = [
-    'sslFolder' => realpath('/ssl'),
+    'sslFolder' => realpath($root . '/ssl'),
     'docroot' => realpath($root . '/public'),
     'email' => $_ENV['ADMIN_EMAIL'],
     'domains' => explode(';', $_ENV['DOMAIN']),

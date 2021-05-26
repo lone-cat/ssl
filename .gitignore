@@ -12,3 +12,5 @@
 
 # Composer PHAR
 /composer.phar
+
+/ssl/
