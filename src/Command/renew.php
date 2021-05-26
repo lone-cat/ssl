@@ -9,7 +9,7 @@ use App\Services\CertManager;
 use App\Services\FileStorage;
 use App\Services\KeyFileManager;
 
-require('/app/src/bootstrap.php');
+require(realpath(__DIR__ . '/../bootstrap.php'));
 
 foreach ($domains as $domain) {
 
